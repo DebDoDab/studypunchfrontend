@@ -1,0 +1,28 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="subjectDetailLabel" *ngIf="isEditing; else newsubject">Edit subject {{subject.name}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="navigateBack()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <ng-template [ngIf]="alert.state" class="mt-3">
+    <ngb-alert [type]="alert.type" (close)=alert.clear()>
+      <h4>{{alert.message}}</h4>
+    </ngb-alert>
+  </ng-template>
+
+  <form class="form-group" [formGroup]="subjectData" (ngSubmit)="submit()">
+    <div class="modal-body form-group">
+      <label for="InputName">Subject's name</label>
+      <input type="text" class="form-control shadow-sm" id="InputName" placeholder="name" formControlName="name">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="navigateBack()">Close</button>
+      <button type="submit" class="btn button-secondary shadow-lg">Submit</button>
+    </div>
+  </form>
+
+</div>
+
+<ng-template #newsubject>Create new subject</ng-template>

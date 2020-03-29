@@ -1,0 +1,34 @@
+<div class="p-3">
+  <div class="text-center text-color-navy">
+    <h1>
+      <span class="mx-4 big-text">{{(userPipe | async).group.name}}'s Subjects</span>
+      <button type="button" class="btn button-secondary text-color-navy shadow-lg px-4 mx-4" (click)="addClick()">Add subject</button>
+    </h1>
+  </div>
+</div>
+<hr class="my-0">
+<!-- 4 columns -->
+<div class="container-fluid padding">
+  <div class="row padding">
+
+      <div class="col-sm-6 col-md-3" *ngFor="let column of subjects">
+        <ul class="list-group">
+          <li *ngFor="let subject of column" class="subject list-group-item p-0 m-3 shadow">
+            <div class="w-100 p-0 m-0 btn button-primary subject">
+              <div class="btn text-center w-75 py-3 text-white" (click)="btnClick(subject)"><h4>{{subject.name}}</h4></div>
+
+              <div class="btn float-right border-left w-25 pt-3 pb-4 text-white" (click)="subjectClick(subject)"  data-toggle="modal" data-target="#subjectDetail">
+                <svg class="bi bi-pencil-square align-middle" width="1.3em" height="1.3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+  </div>
+</div>
+
+<router-outlet></router-outlet>

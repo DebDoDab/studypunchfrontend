@@ -1,0 +1,35 @@
+<div class="p-3">
+  <div class="text-center text-color-navy">
+    <h1>
+      <span class="mx-3">{{(userPipe| async).group.name }}'s Users</span>
+      <input
+        type="text"
+        [value]="(userPipe| async).group.token"
+        readonly
+        ngbPopover="Copy and give it to your groupmates!"
+        popoverTitle="Group token"
+        triggers="mouseenter:mouseleave"
+        class="mx-3 text-color-navy"
+      >
+    </h1>
+  </div>
+</div>
+<hr class="m-0">
+<!-- 4 columns -->
+<div class="container-fluid padding">
+  <div class="row text-center padding">
+
+      <div class="col-sm-6 col-md-3" *ngFor="let column of users">
+          <ul class="list-group">
+          <li *ngFor="let user of column" class="user list-group-item shadow p-0 m-3 btn button-primary">
+            <!-- <a [href]=user.url> -->
+              <div class="user text-white w-100 py-3 m-0" (click)="btnClick(user)">
+                <h4>{{user.username}}</h4>
+              </div>
+            <!-- </a> -->
+          </li>
+        </ul>
+      </div>
+
+  </div>
+</div>

@@ -1,0 +1,79 @@
+* {
+  font-family: 'Sen', sans-serif;
+}
+
+header {
+  font-size: 16pt;
+}
+
+/* You can add global styles to this file, and also import other style files */
+.button-primary {
+  background-color: #68cec7;
+  border-color: #68cec7;
+  transition: background-color 0.5s, border-color 0.5s;
+}
+
+.button-primary:hover {
+  background-color: #73e7d3;
+  border-color: #73e7d3;
+}
+
+.button-primary:focus {
+  background-color: #52c7bf;
+  border-color: #52c7bf;
+}
+
+.button-primary:active {
+  background-color: #3ec1b8;
+  border-color: #3ec1b8;
+}
+
+.button-secondary {
+  background-color: #99ddff;
+  border-color: #99ddff;
+  transition: background-color 0.5s, border-color 0.5s;
+}
+
+.button-secondary:hover {
+  background-color: #78cafc;
+  border-color: #78cafc;
+}
+
+.button-secondary:focus {
+  background-color: #b3e6ff;
+  border-color: #b3e6ff;
+}
+
+.button-secondary:active {
+  background-color: #4dc3ff;
+  border-color: #4dc3ff;
+}
+
+.text-color-navy {
+  color: #00458b;
+  text-shadow: 2px 2px 10px #00458b44;
+}
+
+.text-color-navy:hover {
+  color: #00458b;
+}
+
+.text-color-navy:focus {
+  color: #00458b;
+}
+
+.text-color-navy:active {
+  color: #00458b;
+}
+
+.background-color-white {
+  background-color: #fffd!important;
+}
+
+.background-color-secondary {
+  background-color: #80d4ffcc!important;
+}
+
+.text-shadow-black {
+  text-shadow: 2px 2px 10px #0004;
+}

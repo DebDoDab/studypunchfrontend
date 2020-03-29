@@ -1,0 +1,59 @@
+<div class="p-3">
+  <div class="text-center text-color-navy">
+    <h1>
+      <span class="mx-4">Sign Up</span>
+      <button type="button" class="btn button-secondary text-color-navy shadow-lg px-4 mx-4" (click)="loginClick()">Log in</button>
+      <button type="button" class="btn button-secondary text-color-navy shadow-lg px-4 mx-4" disabled>Sign Up</button>
+    </h1>
+  </div>
+</div>
+<hr>
+
+<ng-template [ngIf]="alert.state">
+  <ngb-alert [type]="alert.type" (close)=alert.clear()>
+    <h4>{{alert.message}}</h4>
+  </ngb-alert>
+</ng-template>
+
+<form class="form-group m-5" [formGroup]="signupData" (ngSubmit)="signup()">
+  <div class="form-group">
+    <label for="InputUsername"><h4>Username</h4></label>
+    <input type="username" class="form-control shadow-sm" id="InputUsername" placeholder="Username" formControlName="username">
+  </div>
+  <div class="form-group">
+    <label for="InputPassword"><h4>Password</h4></label>
+    <input type="password" class="form-control shadow-sm" id="InputPassword" placeholder="Password" formControlName="password">
+  </div>
+  <div class="form-group">
+    <label for="InputPasswordConfirm"><h4>Password</h4></label>
+    <input type="password" class="form-control shadow-sm" id="InputPasswordConfirm" placeholder="Password confirm" formControlName="passwordConfirm">
+  </div>
+
+  <div class="btn-group btn-group-togggle" ngbRadioGroup name="radioBasic" formControlName="group_action">
+    <label ngbButtonLabel class="button-secondary">
+      <input ngbButton type="radio" value="Token"> Use existing group's token (ask your groupmates who are registered)
+    </label>
+    <label ngbButtonLabel class="button-primary border-right">
+      <input ngbButton type="radio" value="Group"> Create new group
+    </label>
+  </div>
+
+  <ng-template #new class="form-group">
+    <div class="form-group">
+      <label for="InputGroup"><h4>Group Name</h4></label>
+      <input type="text" class="form-control shadow-sm" id="InputGroup" placeholder="Your new group's name" formControlName="group_name">
+    </div>
+  </ng-template>
+
+  <ng-template #token>
+    <div class="form-group">
+      <label for="InputGroupToken"><h4>Group Token</h4></label>
+      <input type="text" class="form-control shadow-sm" id="InputGroupToken" placeholder="Group Token; Leave it blank if you're creating new group" formControlName="group_token">
+    </div>
+  </ng-template>
+
+  <ng-container class="form-group" *ngTemplateOutlet="this.signupData.get('group_action').value == 'Token' ? token : new"></ng-container>
+
+
+  <button type="submit" class="btn button-secondary shadow-lg">Submit</button>
+</form>
