@@ -36,7 +36,7 @@ export class HomeworkDetailsComponent implements OnInit {
   homeworkData = new FormGroup({
     name: new FormControl(""),
     description: new FormControl(""),
-    isImportant: new FormControl(""),
+    isImportant: new FormControl(false),
     deadline: new FormControl(),
     subject: new FormControl(""),
   });
@@ -54,13 +54,6 @@ export class HomeworkDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.api.getSubjects().then(resp => {this.subjects = resp;});
   }
-
-  // search = (text$: Observable<string>) =>
-  //   text$.pipe(
-  //     debounceTime(200),
-  //     distinctUntilChanged(),
-  //     map(term => this.subjects.filter(subject => subject.name.toLowerCase().indexOf(term.toLowerCase()) > -1))
-  //   );
 
   search = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());

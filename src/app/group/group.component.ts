@@ -16,7 +16,7 @@ export class GroupComponent implements OnInit {
   });
 
   constructor(private api: ApiService, private router: Router) {
-    
+
   }
 
   ngOnInit(): void {
@@ -31,10 +31,6 @@ export class GroupComponent implements OnInit {
       this.users[index % 4].push(user);
       index++;
     }
-  }
-
-  btnClick(user: User): void {
-    this.router.navigateByUrl("");
   }
 
 }

@@ -14,7 +14,7 @@ import { CurrentUserService } from '../shared/services/current-user.service';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseurl = "http://localhost:8000/api/";
+  private baseurl = "http://api.vadi.tel/api/";
   private httpHeaders = new HttpHeaders(
     {'Content-Type': 'application/json'},
   );
@@ -50,6 +50,9 @@ export class ApiService {
   }
 
   private async createJWT(loginData): Promise<any> {
+    if (loginData['username']) {
+      loginData['username'] = loginData['username'].toLowerCase()
+    }
     return this.http
       .post(this.baseurl + 'auth/jwt/create/',
         loginData,
@@ -231,8 +234,9 @@ export class ApiService {
   }
 
   async patchHomework(homeworkId: number, data): Promise<Homework> {
-    data['deadline'] = data['deadline'].toISOString().split('T')[0];
-    data['subject_id'] = data['subject'].id;
+    let datacopy = data;
+    datacopy['deadline'] = data['deadline'].toISOString().split('T')[0];
+    datacopy['subject_id'] = data['subject'].id;
     delete data['subject'];
     await this.setJWT();
     return this.http
@@ -244,8 +248,9 @@ export class ApiService {
   }
 
   async postHomework(data): Promise<Homework> {
-    data['deadline'] = data['deadline'].toISOString().split('T')[0];
-    data['subject_id'] = data['subject'].id;
+    let datacopy = data;
+    datacopy['deadline'] = data['deadline'].toISOString().split('T')[0];
+    datacopy['subject_id'] = data['subject'].id;
     delete data['subject'];
     await this.setJWT();
     let group_id = CurrentUserService.user.group.id;
