@@ -9,6 +9,7 @@ import { Subject } from '../models/subject';
 import { Homework } from '../models/homework';
 import { Group } from '../models/group';
 import { CurrentUserService } from '../shared/services/current-user.service';
+import { ApierrorhandlerService } from '../validators/apierrorhandler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -102,9 +103,9 @@ export class ApiService {
         observer.next({message: "You succesfully logined", type: "success"});
         observer.complete();
       }).toPromise();
-    } catch {
+    } catch(error) {
       return new Observable((observer) => {
-        observer.next({message: "Login error", type: "danger"});
+        observer.next({message: ApierrorhandlerService.parseError(error), type: "danger"});
         observer.complete();
       }).toPromise();
     }
@@ -119,20 +120,21 @@ export class ApiService {
   }
 
   async signup(signupData): Promise<any> {
-    let user = await this.http
+    try {
+      let user = await this.http
       .post(this.baseurl + 'users/', signupData, {headers: this.httpHeaders})
       .toPromise()
       .then(resp => <User>resp);
-    try {
+
       await this.createJWT({username: signupData['username'], password: signupData['password']});
       CurrentUserService.setCurrentUser(this);
       return new Observable((observer) => {
         observer.next({message: "You succesfully logined", type: "success"});
         observer.complete();
       }).toPromise();
-    } catch {
+    } catch(error) {
       return new Observable((observer) => {
-        observer.next({message: "Login error", type: "danger"});
+        observer.next({message: ApierrorhandlerService.parseError(error), type: "danger"});
         observer.complete();
       }).toPromise();
     }
@@ -144,6 +146,7 @@ export class ApiService {
       .post(this.baseurl + 'groups/', groupData, {headers: this.httpHeaders})
       .toPromise()
       .then(resp => <Group>resp);
+      // .catch(error => {message: ApierrorhandlerService.parseError(error), type: "danger"});
   }
 
   async getCurrentUser(): Promise<User> {

@@ -1,9 +1,11 @@
 <div class="p-3">
   <div class="text-center text-color-navy">
     <h1>
-      <span class="mx-4">Sign Up</span>
-      <button type="button" class="btn button-secondary text-color-navy shadow-lg px-4 mx-4" (click)="loginClick()">Log in</button>
-      <button type="button" class="btn button-secondary text-color-navy shadow-lg px-4 mx-4" disabled>Sign Up</button>
+      <div class="col-sm-12">
+        <button type="button" class="btn button-secondary text-color-navy shadow-lg px-4 mx-4" (click)="loginClick()">Log in</button>
+        OR
+        <button type="button" class="btn button-secondary text-color-navy shadow-lg px-4 mx-4 disabled">Sign Up</button>
+      </div>
     </h1>
   </div>
 </div>
@@ -25,7 +27,7 @@
     <input type="password" class="form-control shadow-sm" id="InputPassword" placeholder="Password" formControlName="password">
   </div>
   <div class="form-group">
-    <label for="InputPasswordConfirm"><h4>Password</h4></label>
+    <label for="InputPasswordConfirm"><h4>Password confirm</h4></label>
     <input type="password" class="form-control shadow-sm" id="InputPasswordConfirm" placeholder="Password confirm" formControlName="passwordConfirm">
   </div>
 
@@ -48,7 +50,7 @@
   <ng-template #token>
     <div class="form-group">
       <label for="InputGroupToken"><h4>Group Token</h4></label>
-      <input type="text" class="form-control shadow-sm" id="InputGroupToken" placeholder="Group Token; Leave it blank if you're creating new group" formControlName="group_token">
+      <input type="text" class="form-control shadow-sm" id="InputGroupToken" placeholder="Group Token" formControlName="group_token">
     </div>
   </ng-template>
 

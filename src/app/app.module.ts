@@ -14,13 +14,15 @@ import { SubjectsModule } from './subjects/subjects.module';
 import { ApiService } from './api/api.service';
 import { CookieService } from 'ngx-cookie-service';
 import { HomeworkModule } from './homework/homework.module';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GroupComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

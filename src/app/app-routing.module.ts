@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { GroupComponent } from './group/group.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { SignupComponent } from './signup/signup.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/homework', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'group', component: GroupComponent },
-  { path: 'subjects', component: SubjectsComponent},
+  { path: 'subjects', component: SubjectsComponent },
+  { path: 'profile', component: ProfileComponent },
 ];
 
 @NgModule({

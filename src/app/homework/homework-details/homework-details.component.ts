@@ -8,6 +8,7 @@ import { NgbActiveModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject as rxSubject, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators';
 import { Subject } from 'src/app/models/subject';
+import { HomeworkvalidatorService } from 'src/app/validators/homeworkvalidator.service';
 
 
 @Component({
@@ -69,6 +70,9 @@ export class HomeworkDetailsComponent implements OnInit {
   formatter = (subject: Subject) => subject.name;
 
   submit() {
+    if (!HomeworkvalidatorService.validateData(this.homeworkData, this.alert)) {
+      return;
+    }
     if (this.isEditing) {
       this.api.patchHomework(this.homework.id, this.homeworkData.value)
       .then(resp => {

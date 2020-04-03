@@ -33,15 +33,14 @@ export class LoginComponent implements OnInit {
   login() {
     this.api.login(this.loginData.value).then(result => {
       this.alert.set(result.message, result.type);
+      if (result.type == 'success') {
+        this.router.navigateByUrl('group', {skipLocationChange: false});
+      }
     }).catch(err => {});
   };
 
-  logoutClick() {
-    this.api.logout();
-  }
-
   signupClick() {
-    this.router.navigateByUrl('signup');
+    this.router.navigateByUrl('signup', {skipLocationChange: true});
   }
 
 }

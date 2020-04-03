@@ -1,6 +1,6 @@
 <header class="sticky-top">
   <nav class="navbar navbar-expand-md navbar-light background-color-secondary">
-    <a class="navbar-brand" routerLink=""><img src="/assets/logo.png" height="50"></a>
+    <a class="navbar-brand" routerLink=""><h1 class="text-color-navy">Studypunch!</h1></a>
 
     <button class="navbar-toggler shadow-sm" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -17,10 +17,10 @@
         <li class="nav-item mx-auto">
           <a class="nav-link font-weight-bold text-shadow-black py-0" routerLink="/subjects">Subjects</a>
         </li>
-        <li class="nav-item mx-auto">
-          <a class="nav-link font-weight-bold text-shadow-black py-0" routerLink="/login">{{(userPipe | async).username}} Icon2</a>
-        </li>
       </ul>
+    </div>
+    <div class="nav-item mx-auto float-right">
+      <a class="nav-link font-weight-bold text-shadow-black py-0" routerLink="/profile">{{(userPipe | async).username}}</a>
     </div>
   </nav>
 </header>

@@ -5,6 +5,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ApiService } from '../api/api.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { ApierrorhandlerService } from '../validators/apierrorhandler.service';
+import { SignupvalidatorService } from '../validators/signupvalidator.service';
 
 @Component({
   selector: 'app-signup',
@@ -32,16 +34,15 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    if (this.signupData.get('password').value !== this.signupData.get('passwordConfirm').value) {
-      this.alert.set("Passwords don't match", "danger");
-      return;
-    } else if (this.signupData.get('password').value.length < 8) {
-      this.alert.set("Password should be at least 8 symbols", "danger");
+    if (!SignupvalidatorService.validateData(this.signupData, this.alert)) {
       return;
     }
     if (this.signupData.get('group_action').value == 'Token') {
       this.api.signup(this.signupData.value).then(result => {
         this.alert.set(result.message, result.type);
+        if (result.type == 'success') {
+          this.router.navigateByUrl('group', {skipLocationChange: false});
+        }
       }).catch(err => {});
     } else {
       let token = "";
@@ -52,13 +53,18 @@ export class SignupComponent implements OnInit {
           this.signupData.patchValue({group_token: token});
           this.api.signup(this.signupData.value).then(result => {
             this.alert.set(result.message, result.type);
-          }).catch(err => {});
+            if (result.type == 'success') {
+              this.router.navigateByUrl('group', {skipLocationChange: false});
+            }
+          });
+        }).catch(error => {
+          this.alert.set(ApierrorhandlerService.parseError(error), "danger");
         });
     }
   };
 
   loginClick() {
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('login', {skipLocationChange: true});
   }
 
 }
