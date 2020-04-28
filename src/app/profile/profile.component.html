@@ -8,6 +8,12 @@
 </div>
 <hr class="m-0">
 
+<ng-template [ngIf]="alert.state">
+  <ngb-alert [type]="alert.type" (close)=alert.clear()>
+    <h4>{{alert.message}}</h4>
+  </ngb-alert>
+</ng-template>
+
 <div class="row">
   <div class="col-md-6 p-5">
     <img src="favicon.ico" style="width:150px; height: 150px;">

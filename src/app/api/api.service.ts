@@ -162,6 +162,10 @@ export class ApiService {
       });
   }
 
+  async changeUserData(userData): Promise<any> {
+    return; // TODO: 
+  }
+
   async getHomework(subject = undefined): Promise<Array<Homework>> {
     await this.setJWT();
     let query = ""
