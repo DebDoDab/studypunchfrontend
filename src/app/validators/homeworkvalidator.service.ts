@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from '../models/subject';
+import { FormGroup } from '@angular/forms';
+import { Alert } from '../models/alert';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class HomeworkvalidatorService {
 
   constructor() { }
 
-  static validateData(homeworkData, alert): boolean {
+  static validateData(homeworkData: FormGroup, alert: Alert): boolean {
     if (!homeworkData.get('name').value) {
       alert.set("Name field may not be blank", "danger");
       return false;

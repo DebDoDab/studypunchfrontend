@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Alert } from '../models/alert';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ export class SignupvalidatorService {
 
   constructor() { }
 
-  static validateData(signupData, alert): boolean {
+  static validateData(signupData: FormGroup, alert: Alert): boolean {
     if (signupData.get('password').value !== signupData.get('passwordConfirm').value) {
       alert.set("Passwords don't match", "danger");
       return false;

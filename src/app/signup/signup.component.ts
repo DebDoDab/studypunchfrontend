@@ -43,7 +43,7 @@ export class SignupComponent implements OnInit {
         if (result.type == 'success') {
           this.router.navigateByUrl('group', {skipLocationChange: false});
         }
-      }).catch(err => {});
+      }).catch(() => {});
     } else {
       let token = "";
       this.api.createGroup({name: this.signupData.get('group_name').value})
