@@ -1,27 +1,30 @@
-# Frontend
+# Studypunch
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
+Studypunch is a project for students to help them solve their deadlines.
+![preview homework](https://imgur.com/ySdGK7P.png)
+![preview subjects](https://imgur.com/mJeileq.png)
 
-## Development server
+## Usage
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Right now you can access it [here](http://vadi.tel)
 
-## Code scaffolding
+### Register right now!
+![sign up](https://imgur.com/0ioivBx.png)
+You can create a new group with a specified name (just choose that option and enter your group name) or register in existing group (ask registered users to give you group token)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Homework
 
-## Build
+List of all current homework
+You can create new deadline for a subject with specificated date, name, description, etc
+![homework](https://imgur.com/vXwWtDB.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Group
 
-## Running unit tests
+List of all current group users, also a group token to give your friends
+![group](https://imgur.com/byrtTYe.png)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Subjects
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+List of all current subjects
+You can create new one with specified name
+![subject](https://imgur.com/KTPcKfR.png)
