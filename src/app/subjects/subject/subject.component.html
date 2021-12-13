@@ -16,6 +16,9 @@
     <div class="modal-body form-group">
       <label for="InputName">Subject's name</label>
       <input type="text" class="form-control shadow-sm" id="InputName" placeholder="name" formControlName="name">
+
+      <label for="InputColor">Subject's color</label>
+      <input type="color" class="form-control shadow-sm" id="InputColor" placeholder="#123456" formControlName="color">
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="navigateBack()">Close</button>

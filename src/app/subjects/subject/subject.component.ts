@@ -16,13 +16,14 @@ export class SubjectComponent implements OnInit {
   @Input()
   set subjectset(subject: Subject) {
     this.subject = subject;
-    this.subjectData.setValue({name: subject.name});
+    this.subjectData.setValue({name: subject.name, color: subject.color});
   }
   @Input()
   isEditing: boolean = true;
 
   subjectData = new FormGroup({
     name: new FormControl(""),
+    color: new FormControl(""),
   });
   alert: Alert = new Alert();
 

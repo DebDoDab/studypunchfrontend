@@ -18,7 +18,7 @@
         <ul class="list-group">
           <li *ngFor="let homework of column.data" class="homework button-primary list-group-item p-0">
             <div class="w-100">
-              <button class="btn btn-info p-0 w-100" (click)="btnClick(homework.subject)">
+              <button class="btn btn-info p-0 w-100" (click)="btnClick(homework.subject)" style="background-color: {{homework.subject.color}}">
                 {{homework.subject.name}}
               </button>
 

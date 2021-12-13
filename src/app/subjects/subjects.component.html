@@ -14,7 +14,7 @@
       <div class="col-sm-6 col-md-3" *ngFor="let column of subjects">
         <ul class="list-group">
           <li *ngFor="let subject of column" class="subject list-group-item p-0 m-3 shadow">
-            <div class="w-100 p-0 m-0 btn button-primary subject">
+            <div class="w-100 p-0 m-0 btn button-primary subject" style="background-color: {{subject.color}}; ">
               <div class="btn text-center w-75 py-3 text-white" (click)="btnClick(subject)"><h4>{{subject.name}}</h4></div>
 
               <div class="btn float-right border-left w-25 pt-3 pb-4 text-white" (click)="subjectClick(subject)"  data-toggle="modal" data-target="#subjectDetail">

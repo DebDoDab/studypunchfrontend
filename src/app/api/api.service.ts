@@ -15,7 +15,8 @@ import { ApierrorhandlerService } from '../validators/apierrorhandler.service';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseurl = "http://api.vadi.tel/api/";
+//   private baseurl = "http://api.vadi.tel/api/";
+  private baseurl = "http://localhost:8000/api/";
   private httpHeaders = new HttpHeaders(
     {'Content-Type': 'application/json'},
   );
@@ -163,7 +164,7 @@ export class ApiService {
   }
 
   async changeUserData(userData): Promise<any> {
-    return; // TODO: 
+    return; // TODO:
   }
 
   async getHomework(subject = undefined): Promise<Array<Homework>> {
