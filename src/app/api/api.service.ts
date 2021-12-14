@@ -220,13 +220,13 @@ export class ApiService {
       .then(resp => <Subject>resp);
   }
 
-  async deleteSubject(subjectId: number): void {
+  async deleteSubject(subjectId: number): null {
     await this.setJWT();
     return this.http
       .delete(this.baseurl + 'subjects/' + subjectId + '/', {headers: this.httpHeaders})
       .toPromise()
       .then(resp => {
-        return;
+        return null;
       });
   }
 
@@ -266,12 +266,12 @@ export class ApiService {
       .then(resp => <Homework>resp);
   }
 
-  async deleteHomework(homeworkId: number): void {
+  async deleteHomework(homeworkId: number): null {
     await this.setJWT();
     return this.http
       .delete(this.baseurl + 'homework/' + homeworkId + '/', {headers: this.httpHeaders})
       .toPromise()
-      .then(resp => {return})
+      .then(resp => {return null})
   }
 
   async postHomework(data): Promise<Homework> {
@@ -300,13 +300,13 @@ export class ApiService {
       });
   }
 
-  async deleteColumn(columnId: number): void {
+  async deleteColumn(columnId: number): null {
     await this.setJWT();
     return this.http
       .delete(this.baseurl + 'columns/' + columnId + '/', {headers: this.httpHeaders})
       .toPromise()
       .then(resp => {
-        return;
+        return null;
       });
   }
 
