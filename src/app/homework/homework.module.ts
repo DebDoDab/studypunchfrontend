@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { ColumnDetailsComponent } from './column-details/column-details.component';
 
 
 
 @NgModule({
   declarations: [
     HomeworkComponent,
-    HomeworkDetailsComponent
+    HomeworkDetailsComponent,
+    ColumnDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,7 @@ import { NgbModule, NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/n
     FormsModule,
     NgbModule
   ],
-  entryComponents: [HomeworkDetailsComponent],
+  entryComponents: [HomeworkDetailsComponent, ColumnDetailsComponent],
   providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class HomeworkModule { }

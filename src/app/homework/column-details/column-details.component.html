@@ -1,0 +1,33 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="homeworkDetailsLabel" *ngIf="isEditing; else newhomework">Edit column {{column.name}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="navigateBack()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <ng-template [ngIf]="alert.state" class="mt-3">
+    <ngb-alert [type]="alert.type" (close)=alert.clear()>
+      <h4>{{alert.message}}</h4>
+    </ngb-alert>
+  </ng-template>
+
+  <form class="form-group" [formGroup]="columnData" (ngSubmit)="submit()">
+    <div class="modal-body form-group">
+
+      <label for="InputName">Column's name</label>
+      <input type="text" class="input-group form-control shadow-sm mb-3" id="InputName" placeholder="<1 week" formControlName="name">
+
+      <label for="InputLessThan">Homework with deadline in less than X days would go in this column</label>
+      <input type="text" class="input-group form-control shadow-sm mb-3" id="InputLessThan" placeholder="7" formControlName="less_than">
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="navigateBack()">Close</button>
+      <button type="submit" class="btn button-secondary shadow-lg">Submit</button>
+    </div>
+  </form>
+
+</div>
+
+<ng-template #newhomework>Create new column</ng-template>

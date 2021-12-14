@@ -10,6 +10,7 @@ import { Subject } from '../models/subject';
 import { CurrentUserService } from '../shared/services/current-user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HomeworkDetailsComponent } from './homework-details/homework-details.component';
+import { ColumnDetailsComponent } from './column-details/column-details.component';
 
 @Component({
   selector: 'app-homework',
@@ -18,7 +19,7 @@ import { HomeworkDetailsComponent } from './homework-details/homework-details.co
 })
 export class HomeworkComponent implements OnInit {
   userPipe = CurrentUserService.userPipe;
-  homework: Array<Column>;
+  columns: Array<Column>;
   columnsNames = ["< week", "< 2 weeks", "longterm", "expired"];
   currentSubject: number = undefined;
 
@@ -35,33 +36,64 @@ export class HomeworkComponent implements OnInit {
       .subscribe(params => {
         this.currentSubject = params.id;
 
-        this.homework = new Array(4).fill(false).map((value, index) => {
-          return new Column(this.columnsNames[index]);
-        });
-
-        this.api.getHomework(this.currentSubject).then(resp => {
-          this.divide(resp)
-        });
+        this.api.getColumns().then(resp => {
+          this.set_columns(resp);
+          this.api.getHomework(this.currentSubject).then(resp => {
+            this.divide(resp)
+          });
+        })
       });
+  }
+
+  set_columns(columns: Array<Column>): void {
+    this.columns = columns.map(column => {
+      column.data = new Array<Homework>();
+      column.editable = true;
+      return column;
+    });
+    this.columns.sort((n1, n2) => {
+      return n1.less_than - n2.less_than;
+    });
+    this.columns.push(new Column(
+      -1,
+      "longterm", 
+      Number.MAX_SAFE_INTEGER, 
+      false
+    ));
+    this.columns.push(new Column(
+      -1,
+      "expired", 
+      0, 
+      false
+    ));
   }
 
   divide(result: Array<Homework>): void {
     let today = new Date();
-    let week = new Date();
-    week.setDate(today.getDate() + 7);
-    let twoWeeks = new Date();
-    twoWeeks.setDate(today.getDate() + 14);
+    let days_limits = new Array<Date>();
+    for (let column of this.columns) {
+      days_limits.push(new Date());
+      days_limits[days_limits.length - 1].setDate(today.getDate() + column.less_than);
+    }
 
     for (let homework of result) {
       homework.deadline = new Date(homework.deadline);
+
       if (homework.deadline <= today) {
-        this.homework[3].data.push(homework);
-      } else if (homework.deadline <= week) {
-        this.homework[0].data.push(homework);
-      } else if (homework.deadline <= twoWeeks) {
-        this.homework[1].data.push(homework);
-      } else {
-        this.homework[2].data.push(homework);
+        this.columns[this.columns.length - 1].data.push(homework);
+        continue;
+      }
+      let longterm = true;
+      for (let column_num = 0; column_num < this.columns.length - 2; column_num++) {
+        if (homework.deadline <= days_limits[column_num]) {
+          this.columns[column_num].data.push(homework);
+          longterm = false;
+          break;
+        }
+      }
+
+      if (longterm) {
+        this.columns[this.columns.length - 2].data.push(homework);
       }
     }
   }
@@ -88,6 +120,34 @@ export class HomeworkComponent implements OnInit {
     });
   }
 
+  columnAddClick() : void {
+    let column: Column;
+    const modalRef = this.modalService.open(ColumnDetailsComponent);
+    modalRef.componentInstance.isEditing = false;
+    modalRef.result.then((result) => {
+      if (result) {
+        column = result;
+      }
+    }, (reason) => {
+    }).finally(() => {
+      this.replace(new Homework());
+    });
+  }
+
+  columnClick(column: Column): void {
+    console.log(column);
+    const modalRef = this.modalService.open(ColumnDetailsComponent);
+    modalRef.componentInstance.columnset = column;
+    modalRef.result.then((result) => {
+      if (result) {
+        column = result;
+      }
+    }, (reason) => {
+    }).finally(() => {
+      this.replace(new Homework());
+    });
+  }
+
   homeworkClick(homework: Homework): void {
     const modalRef = this.modalService.open(HomeworkDetailsComponent);
     modalRef.componentInstance.homeworkset = homework;
@@ -101,7 +161,7 @@ export class HomeworkComponent implements OnInit {
     });
   }
 
-  replace(subject: Subject): void {
+  replace(homework: Homework): void {
     //need async pipes or full replace
     //now its nothing to do
     window.location.reload();

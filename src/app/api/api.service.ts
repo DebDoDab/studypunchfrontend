@@ -8,6 +8,7 @@ import { User } from '../models/user';
 import { Subject } from '../models/subject';
 import { Homework } from '../models/homework';
 import { Group } from '../models/group';
+import { Column } from '../models/column';
 import { CurrentUserService } from '../shared/services/current-user.service';
 import { ApierrorhandlerService } from '../validators/apierrorhandler.service';
 
@@ -269,5 +270,45 @@ export class ApiService {
         {headers: this.httpHeaders})
       .toPromise()
       .then(resp => <Homework>resp);
+  }
+
+  async getColumns(): Promise<Array<Column>> {
+    await this.setJWT();
+    return this.http
+      .get(this.baseurl + 'columns/', {headers: this.httpHeaders})
+      .toPromise()
+      .then(resp => {
+        return <Array<Column>>resp['results'];
+      });
+  }
+
+  async getColumn(columnId: number): Promise<Column> {
+    await this.setJWT();
+    return this.http
+      .get(this.baseurl + 'columns/' + columnId + '/', {headers: this.httpHeaders})
+      .toPromise()
+      .then(resp => <Column>resp);
+  }
+
+  async patchColumn(columnId: number, data): Promise<Column> {
+    await this.setJWT();
+    return this.http
+      .patch(this.baseurl + 'columns/' + columnId + '/',
+        data,
+        {headers: this.httpHeaders})
+      .toPromise()
+      .then(resp => <Column>resp);
+  }
+
+  async postColumn(data): Promise<Column> {
+    await this.setJWT();
+    let group_id = CurrentUserService.user.group.id;
+    data['group_id'] = group_id;
+    return this.http
+      .post(this.baseurl + 'columns/',
+        data,
+        {headers: this.httpHeaders})
+      .toPromise()
+      .then(resp => <Column>resp);
   }
 }
