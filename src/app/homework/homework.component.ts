@@ -149,22 +149,35 @@ export class HomeworkComponent implements OnInit {
   }
 
   homeworkClick(homework: Homework): void {
+    let method = "get";
     const modalRef = this.modalService.open(HomeworkDetailsComponent);
     modalRef.componentInstance.homeworkset = homework;
     modalRef.result.then((result) => {
-      if (result) {
+      if (result instanceof Array) {
+        homework = result[0];
+        method = result[1];
+      } else if (result) {
         homework = result;
       }
     }, (reason) => {
     }).finally(() => {
-      this.replace(homework);
+      this.replace(homework, method);
     });
   }
 
-  replace(homework: Homework): void {
-    //need async pipes or full replace
-    //now its nothing to do
-    window.location.reload();
+  replace(homework: Homework, method: string = "get"): void {
+    if (homework && method == "delete") {
+      for (let column_id = 0; column_id < this.columns.length; column_id++) {
+        let column = this.columns[column_id];
+        for (let hw_id = 0; hw_id < column.data.length; hw_id++) {
+          if (column.data[hw_id].id == homework.id) {
+            this.columns[column_id].data.splice(hw_id, 1);
+          }
+        }
+      }
+    } else {
+      window.location.reload();
+    }
   }
 
 }

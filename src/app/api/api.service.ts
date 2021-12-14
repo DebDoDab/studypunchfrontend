@@ -220,7 +220,7 @@ export class ApiService {
       .then(resp => <Subject>resp);
   }
 
-  async deleteSubject(subjectId: number): null {
+  async deleteSubject(subjectId: number): Promise<null> {
     await this.setJWT();
     return this.http
       .delete(this.baseurl + 'subjects/' + subjectId + '/', {headers: this.httpHeaders})
@@ -266,7 +266,7 @@ export class ApiService {
       .then(resp => <Homework>resp);
   }
 
-  async deleteHomework(homeworkId: number): null {
+  async deleteHomework(homeworkId: number): Promise<null> {
     await this.setJWT();
     return this.http
       .delete(this.baseurl + 'homework/' + homeworkId + '/', {headers: this.httpHeaders})
@@ -300,7 +300,7 @@ export class ApiService {
       });
   }
 
-  async deleteColumn(columnId: number): null {
+  async deleteColumn(columnId: number): Promise<null> {
     await this.setJWT();
     return this.http
       .delete(this.baseurl + 'columns/' + columnId + '/', {headers: this.httpHeaders})

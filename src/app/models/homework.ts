@@ -2,7 +2,7 @@ import { Subject } from './subject';
 
 export class Homework {
   id: number;
-  isImportant: boolean;
+  is_important: boolean;
   deadline: Date;
   subject: Subject;
   name: string;
@@ -10,7 +10,7 @@ export class Homework {
 
   constructor() {
     this.id = -1;
-    this.isImportant = false;
+    this.is_important = false;
     this.deadline = new Date(0);
     this.subject = new Subject();
     this.name = "undefined";

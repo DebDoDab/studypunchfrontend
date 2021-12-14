@@ -26,7 +26,7 @@ export class HomeworkDetailsComponent implements OnInit {
     this.homeworkData.setValue({
       name: homework.name,
       description: homework.description,
-      isImportant: homework.isImportant,
+      isImportant: homework.is_important,
       deadline: homework.deadline,
       subject: homework.subject
     });
@@ -97,17 +97,17 @@ export class HomeworkDetailsComponent implements OnInit {
   delete() {
     this.api.deleteHomework(this.homework.id)
       .then(resp => {
-      this.homework = resp;
+      // this.homework = resp;
       this.alert.clear();
-      window.location.reload();
-      this.navigateBack();
+      // window.location.reload();
+      this.navigateBack("delete");
     }).catch(error => {
       this.alert.set(error.message, 'danger');
     });
   }
 
-  navigateBack() {
-    this.activeModal.close(this.homework);
+  navigateBack(method: string = "get") {
+    this.activeModal.close([this.homework, method]);
   }
 
 }

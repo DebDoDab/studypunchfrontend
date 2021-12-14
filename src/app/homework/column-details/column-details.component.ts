@@ -77,7 +77,6 @@ export class ColumnDetailsComponent implements OnInit {
           .then(resp => {
             this.column = resp;
             this.alert.clear();
-            window.location.reload();
             this.navigateBack();
           }).catch(error => {
             this.alert.set(error.message, 'danger');
