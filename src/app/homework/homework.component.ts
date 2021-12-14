@@ -56,14 +56,14 @@ export class HomeworkComponent implements OnInit {
     });
     this.columns.push(new Column(
       -1,
-      "longterm", 
-      Number.MAX_SAFE_INTEGER, 
+      "longterm",
+      Number.MAX_SAFE_INTEGER,
       false
     ));
     this.columns.push(new Column(
       -1,
-      "expired", 
-      0, 
+      "expired",
+      0,
       false
     ));
   }

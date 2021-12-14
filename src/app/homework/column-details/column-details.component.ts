@@ -72,6 +72,18 @@ export class ColumnDetailsComponent implements OnInit {
     }
   }
 
+  delete(): void {
+    this.api.deleteColumn(this.column.id)
+          .then(resp => {
+            this.column = resp;
+            this.alert.clear();
+            window.location.reload();
+            this.navigateBack();
+          }).catch(error => {
+            this.alert.set(error.message, 'danger');
+          });
+  }
+
   navigateBack() {
     this.activeModal.close(this.column);
   }

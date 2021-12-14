@@ -58,6 +58,18 @@ export class SubjectComponent implements OnInit {
     }
   }
 
+  delete(): void {
+    this.api.deleteSubject(this.subject.id)
+            .then(resp => {
+              this.subject = resp;
+              this.alert.clear();
+              window.location.reload();
+              this.navigateBack();
+            }).catch(error => {
+              this.alert.set(error.message, 'danger');
+            });
+  }
+
   navigateBack() {
     this.activeModal.close(this.subject);
   }

@@ -94,6 +94,18 @@ export class HomeworkDetailsComponent implements OnInit {
     }
   }
 
+  delete() {
+    this.api.deleteHomework(this.homework.id)
+      .then(resp => {
+      this.homework = resp;
+      this.alert.clear();
+      window.location.reload();
+      this.navigateBack();
+    }).catch(error => {
+      this.alert.set(error.message, 'danger');
+    });
+  }
+
   navigateBack() {
     this.activeModal.close(this.homework);
   }
