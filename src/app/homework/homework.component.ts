@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ApiService } from '../api/api.service';
+import { WebsocketService } from '../websocket/websocket.service';
 import { Column } from '../models/column';
 import { Homework } from '../models/homework';
 import { User } from '../models/user';
@@ -27,8 +28,22 @@ export class HomeworkComponent implements OnInit {
     private api : ApiService,
     private route: ActivatedRoute,
     private router: Router,
-    public modalService: NgbModal
-  ) {}
+    public modalService: NgbModal,
+    private Websocket: WebsocketService
+  ) {
+    this.api.getCurrentUser().then(resp => {
+      var group_id = resp.group.id;
+      this.Websocket.connect(group_id).subscribe(
+        msg => { 
+          let homework = <Homework>msg['homework'];
+          let method = msg['method'];
+          this.replace(homework, method);
+        },
+        err => console.log('websocket error', err),
+        () => console.log('websocket complete')
+      );
+    });
+  }
 
   ngOnInit(): void {
     this.currentSubject = undefined;
@@ -41,7 +56,7 @@ export class HomeworkComponent implements OnInit {
           this.api.getHomework(this.currentSubject).then(resp => {
             this.divide(resp)
           });
-        })
+        });
       });
   }
 
@@ -108,15 +123,19 @@ export class HomeworkComponent implements OnInit {
 
   addClick() {
     let homework: Homework;
+    let method: string;
     const modalRef = this.modalService.open(HomeworkDetailsComponent);
     modalRef.componentInstance.isEditing = false;
     modalRef.result.then((result) => {
-      if (result) {
+      if (result instanceof Array) {
+        homework = result[0];
+        method = result[1];
+      } else if (result) {
         homework = result;
       }
     }, (reason) => {
     }).finally(() => {
-      this.replace(homework);
+      //this.replace(homework, method);
     });
   }
 
@@ -130,7 +149,7 @@ export class HomeworkComponent implements OnInit {
       }
     }, (reason) => {
     }).finally(() => {
-      this.replace(new Homework());
+      //this.replace(new Homework());
     });
   }
 
@@ -144,7 +163,7 @@ export class HomeworkComponent implements OnInit {
       }
     }, (reason) => {
     }).finally(() => {
-      this.replace(new Homework());
+      //this.replace(new Homework());
     });
   }
 
@@ -161,11 +180,12 @@ export class HomeworkComponent implements OnInit {
       }
     }, (reason) => {
     }).finally(() => {
-      this.replace(homework, method);
+      // this.replace(homework, method);
     });
   }
 
   replace(homework: Homework, method: string = "get"): void {
+    console.log(homework, method);
     if (homework && method == "delete") {
       for (let column_id = 0; column_id < this.columns.length; column_id++) {
         let column = this.columns[column_id];
@@ -175,6 +195,13 @@ export class HomeworkComponent implements OnInit {
           }
         }
       }
+    } else if (homework && method == "create") {
+      let res = new Array<Homework>();
+      res.push(homework);
+      this.divide(res);
+    } else if (homework && method == "edit") {
+      this.replace(homework, "delete");
+      this.replace(homework, "create");
     } else {
       window.location.reload();
     }

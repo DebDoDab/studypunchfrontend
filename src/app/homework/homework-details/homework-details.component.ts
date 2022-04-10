@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Homework } from '../../models/homework';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Alert } from '../../models/alert';
+import { WebsocketService } from 'src/app/websocket/websocket.service';
 import { ApiService } from 'src/app/api/api.service';
 
 import { NgbActiveModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -49,7 +50,8 @@ export class HomeworkDetailsComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private Websocket: WebsocketService
   ) { }
 
   ngOnInit(): void {
@@ -78,7 +80,8 @@ export class HomeworkDetailsComponent implements OnInit {
       .then(resp => {
         this.homework = resp;
         this.alert.clear();
-        this.navigateBack();
+        this.navigateBack("edit");
+          this.Websocket.subject.next({'homework': this.homework, 'method': 'edit'});
       }).catch(error => {
         this.alert.set(error.message, 'danger');
       });
@@ -87,7 +90,8 @@ export class HomeworkDetailsComponent implements OnInit {
         .then(resp => {
           this.homework = resp;
           this.alert.clear();
-          this.navigateBack();
+          this.navigateBack("create");
+          this.Websocket.subject.next({'homework': this.homework, 'method': 'create'});
         }).catch(error => {
           this.alert.set(error.message, 'danger');
         });
@@ -101,6 +105,7 @@ export class HomeworkDetailsComponent implements OnInit {
       this.alert.clear();
       // window.location.reload();
       this.navigateBack("delete");
+      this.Websocket.subject.next({'homework': this.homework, 'method': 'delete'});
     }).catch(error => {
       this.alert.set(error.message, 'danger');
     });
